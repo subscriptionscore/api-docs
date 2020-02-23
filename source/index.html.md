@@ -17,13 +17,21 @@ search: true
 
 # Introduction
 
-Welcome to the <a href="https://subscriptionscore.com">Subscription Score</a> Insights API! You can use our API to access our score API endpoints, which can get you information on Domains and Email addresses.
+Welcome to the <a href="https://subscriptionscore.com">Subscription Score</a> Insights API! You can use the API to access our score endpoints, which can get you score data for both Domains and Email addresses.
 
-We have language bindings in Shell and JavaScript. You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+On this page you will see examples in both GraphQL and JavaScript. You can view the code examples in the dark area to the right, and you can switch the language of the examples with the tabs in the top right.
 
 The API uses <a href="https://graphql.org/">GraphQL</a> so that you can retrieve exactly the attributes that you need. A basic understanding of GraphQL is recommended, but not required to intgrate with the API.
 
 # Considerations
+
+## Rate Limit
+
+The API is rate limited on a fair-usage policy. The limit should be high enough for normal use but if you hit it then the API will respond with a message notifying you. If you need the API limit raised on your account please [contact us](mailto:hi@subscriptionscore.com).
+
+## Updates
+
+Scores are updated daily at 00:00 UTC, so there is no need to request an individual score more frequently than that.
 
 ## HTTPS
 
@@ -56,7 +64,7 @@ A great many mailing lists are sent from generic email provider domains. For exa
 
 Due to this, using the [`domainScore`](#domain-score) query against such domains as `gmail.com`, `outlook.com`, or any other email provider, would essentially yield a useless outcome. Therefore we don't provide this functionality for these domains and the result of such a query will always be empty.
 
-However, using the the [`emailScore`](#email-score) query on a specific email address will still work fine.
+However, using the the [`emailScore`](#email-address-score) query on a specific email address will still work fine.
 
 # Authentication
 
@@ -317,17 +325,17 @@ type Score {
 }
 </pre>
 
-| Parameter             | Type                    | Description                                                                                                                                                                                                                         |
-| --------------------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| rank                  | String                  | The overall rank of a domain or mailing list, ranks are percentile based from F to A+                                                                                                                                               |
-| unsubscribeAvg        | Int                     | The relative average unsubscribe rate. 1 = Above average, 0 = Average, -1 = Below Average                                                                                                                                           |
-| unsubscribeRate       | Float                   | The absolute unsubscribe rate as a percentage. Bear in mind that absolute rates will be inflated, our average unsub rate is around 30%                                                                                              |
-| frequencyPerWeek      | Float                   | The number of emails this domain or mailing list sends per week. The domain frequency is an average of all their mailing list frequencies                                                                                           |
-| unsubscribeDifficulty | Int                     | The relative difficuly to unsubscribe from this mailing list. 1 = Easy, 2 = Tedious, 3 = Difficult. Easy is defined as a single click unsubscribe                                                                                   |
-| contentQuality        | Int                     | The relative quality of the mailing list(s). Quality is determined by the user intent after receiving the mailing list emails, and is not indicative of actual email content. [Email us](mailto:hi@leavemealone.app) for more info. |
-| inboxPlacement        | [Placement](#placement) | The percentage of times the mailing list(s) emails ended up in the spam or inbox mailboxes                                                                                                                                          |
-| domain                | String                  | (if [domainScore query](#domain-score)) The normalized domain present in the request. This may be different to the request if a domain is aliased, or if a subdomain was provided                                                   |
-| email                 | String                  | (if [emailScore query](#email-address-score)) The hashed email address that was provided in the query params                                                                                                                        |
+| Parameter             | Type                    | Description                                                                                                                                                                                                                              |
+| --------------------- | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| rank                  | String                  | The overall rank of a domain or mailing list, ranks are percentile based from F to A+                                                                                                                                                    |
+| unsubscribeAvg        | Int                     | The relative average unsubscribe rate. 1 = Above average, 0 = Average, -1 = Below Average                                                                                                                                                |
+| unsubscribeRate       | Float                   | The absolute unsubscribe rate as a percentage. Bear in mind that absolute rates will be inflated, our average unsub rate is around 30%                                                                                                   |
+| frequencyPerWeek      | Float                   | The number of emails this domain or mailing list sends per week. The domain frequency is an average of all their mailing list frequencies                                                                                                |
+| unsubscribeDifficulty | Int                     | The relative difficuly to unsubscribe from this mailing list. 1 = Easy, 2 = Tedious, 3 = Difficult. Easy is defined as a single click unsubscribe                                                                                        |
+| contentQuality        | Int                     | The relative quality of the mailing list(s). Quality is determined by the user intent after receiving the mailing list emails, and is not indicative of actual email content. [Email us](mailto:hi@subscriptionscore.com) for more info. |
+| inboxPlacement        | [Placement](#placement) | The percentage of times the mailing list(s) emails ended up in the spam or inbox mailboxes                                                                                                                                               |
+| domain                | String                  | (if [domainScore query](#domain-score)) The normalized domain present in the request. This may be different to the request if a domain is aliased, or if a subdomain was provided                                                        |
+| email                 | String                  | (if [emailScore query](#email-address-score)) The hashed email address that was provided in the query params                                                                                                                             |
 
 ## Placement
 
@@ -344,3 +352,7 @@ The Placement type describes the percentage of times the mail is seen within the
 | --------- | ----- | ---------------------------------------------------------------- |
 | inbox     | Float | Percentage of times the mailing list is seen in the inbox        |
 | spam      | Float | Percentage of times the mailing list is seen in the spam mailbox |
+
+# Help
+
+Need help? Contact us at <a href="mailto:hi@subsccriptionscore.com">hi@subsccriptionscore.com</a>.
