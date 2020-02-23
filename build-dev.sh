@@ -1,0 +1,1 @@
+NODE_ENV=development bundle exec middleman server && open http://localhost:4567
