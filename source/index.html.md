@@ -336,6 +336,7 @@ type Score {
 | inboxPlacement        | [Placement](#placement) | The percentage of times the mailing list(s) emails ended up in the spam or inbox mailboxes                                                                                                                                               |
 | domain                | String                  | (if [domainScore query](#domain-score)) The normalized domain present in the request. This may be different to the request if a domain is aliased, or if a subdomain was provided                                                        |
 | email                 | String                  | (if [emailScore query](#email-address-score)) The hashed email address that was provided in the query params                                                                                                                             |
+| meta                  | [Meta](#meta)           | Metadata regarding the Score                                                                                                                                                                                                             |
 
 ## Placement
 
@@ -352,6 +353,24 @@ The Placement type describes the percentage of times the mail is seen within the
 | --------- | ----- | ---------------------------------------------------------------- |
 | inbox     | Float | Percentage of times the mailing list is seen in the inbox        |
 | spam      | Float | Percentage of times the mailing list is seen in the spam mailbox |
+
+## Meta
+
+<pre class="highlight graphql tab-graphql">
+type Meta {
+  timesSeen: Int!
+  lastUnsubscribedAt: Date
+  lastSeenAt: Date!
+}
+</pre>
+
+Metadata regarding the Score
+
+| Parameter          | Type | Description                                                                                                       |
+| ------------------ | ---- | ----------------------------------------------------------------------------------------------------------------- |
+| timesSeen          | Int  | The number of times we've seen mailing lists from this domain or email address                                    |
+| lastUnsubscribedAt | Int  | JavaScript timestamp of when we last processed an unsubscribe on a mailing list from this domain or email address |
+| lastSeenAt         | Int  | JavaScript timestamp of when we last identified a mailing list from this domain or email address                  |
 
 # Help
 
